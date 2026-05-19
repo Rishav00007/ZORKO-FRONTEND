@@ -67,6 +67,30 @@ const CartSidebar = ({ isOpen, onClose }) => {
               <span>Subtotal</span>
               <span>₹{subtotal}</span>
             </div>
+            {/* ✅ Dynamic delivery charge */}
+            {subtotal < 200 ? (
+              <div className="flex justify-between text-sm text-gray-500">
+                <span>Delivery Charge</span>
+                <span>₹50</span>
+              </div>
+            ) : (
+              <div className="flex justify-between text-sm text-green-600 font-medium">
+                <span>Delivery Charge</span>
+                <span>🎉 FREE</span>
+              </div>
+            )}
+
+            {/* ✅ Free delivery nudge */}
+            {subtotal < 200 && (
+              <p className="text-xs text-center text-purple-600 bg-purple-50 rounded-lg py-1.5 px-2">
+                Add ₹{200 - subtotal} more for FREE delivery!
+              </p>
+            )}
+
+            <div className="flex justify-between font-bold text-lg border-t pt-2">
+              <span>Total</span>
+              <span>₹{subtotal + (subtotal < 200 ? 50 : 0)}</span>
+            </div>
             <button onClick={handleCheckout} className="w-full btn-primary py-3 text-base">
               Proceed to Checkout →
             </button>

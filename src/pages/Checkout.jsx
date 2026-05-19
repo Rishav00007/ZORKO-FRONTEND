@@ -197,15 +197,17 @@ import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
 import toast from 'react-hot-toast';
 
-const DELIVERY_CHARGE = 0;
+//const DELIVERY_CHARGE = 0;
 
 const Checkout = () => {
   const { cart, subtotal, clearCart } = useCart();
   const navigate = useNavigate();
+  const DELIVERY_CHARGE = subtotal < 200 ? 50 : 0;
 
   const [step, setStep] = useState(1);
   const [customer, setCustomer] = useState({ name: '', phone: '' });
   const [address, setAddress] = useState({ fullAddress: '', landmark: ''});
+  const [notes, setNotes] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('online'); // ✅ NEW
   const [screenshot, setScreenshot] = useState(null);
   const [screenshotPreview, setScreenshotPreview] = useState(null);
@@ -241,6 +243,7 @@ const Checkout = () => {
       formData.append('deliveryCharge', DELIVERY_CHARGE);
       formData.append('totalAmount', totalAmount);
       formData.append('paymentMethod', paymentMethod); // ✅ NEW
+      formData.append('notes', notes); // ✅ ADD THIS
       if (paymentMethod === 'online' && screenshot) {
         formData.append('paymentScreenshot', screenshot);
       }
@@ -331,6 +334,20 @@ const Checkout = () => {
             onChange={(e) => setAddress({ ...address, pincode: e.target.value.replace(/\D/g, '') })}
             className="w-full border rounded-lg p-3 text-sm focus:outline-none focus:border-primary"
           /> */}
+
+          {/* ✅ ADD THIS BELOW LANDMARK */}
+          <div>
+            <label className="text-xs text-gray-500 mb-1 block">
+              Special Instructions <span className="text-gray-400">(optional)</span>
+            </label>
+            <textarea
+              placeholder="e.g. Less spicy, extra sauce, ring the bell..."
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="w-full border rounded-lg p-3 text-sm resize-none h-16 focus:outline-none focus:border-primary"
+            />
+          </div>
+
           <button onClick={handleStep1} className="w-full btn-primary py-3">
             Continue to Payment →
           </button>

@@ -111,6 +111,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-primary to-purple-400 rounded-2xl p-6 mb-6 text-white">
         <h1 className="text-3xl font-bold">🍴 Welcome!</h1>
         <p className="mt-1 opacity-90">Fresh food, delivered to your door</p>
+        <p className="mt-1 opacity-90">(Enjoy Free Delivery on Order above ₹200 🎉)</p>
       </div>
 
       {/* Category Tabs — sticky below navbar */}
